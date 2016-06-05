@@ -99,5 +99,21 @@ app.tried();
 //app.double();
 console.log(app.value);
 
+// Augmenting Types
+// First, augment Function.prototype with a new 'method'
+Function.prototype.method = function (name, func) {
+	// Defensive technique to add a method
+	if (!this.prototype[name]) {
+		this.prototype[name] = func;
+		return this;
+	}
+};
+// Now use the 'method' method
+app.doubleVal = 23.67;
+Number.method('integer', function() {
+	return Math[this < 0 ? 'ceil' : 'floor'](this);
+});
+console.log(app.doubleVal.integer());
+
 // Export app
 module.exports = app;
