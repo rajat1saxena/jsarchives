@@ -17,6 +17,14 @@ app.value = 1;
 
 // 1. Method invocation pattern
 app.add = function(a, b) {
+	// Exception handling
+	if (typeof a !== 'number' || typeof b !== 'number') {
+		throw {
+			name: 'TypeError',
+			message: 'Arguments should be numeric'
+		};
+	}
+
 	// In this method 'this' refers to the object
 	// this function is a part of.
 	console.log(this);
@@ -75,6 +83,18 @@ console.log('addAll: ' + app.addAll(1,2,3));
 
 // Call the add function
 app.add(6, 5);
+// Call the add function, with non-numeric arguments
+// app.add('Haha', 6); // Note the this step will halt further execution
+// Try-catch
+app.tried = function() {
+	try {
+		app.add('Haha', 6);
+	} catch (e) {
+		console.log('\nError encountered in tried()');
+		console.log(e.name + ': ' + e.message);
+	}
+};
+app.tried();
 // Call the double function ; Uncomment to use Func. Inv. pattern 
 //app.double();
 console.log(app.value);
