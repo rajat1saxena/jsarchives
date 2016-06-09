@@ -115,5 +115,24 @@ Number.method('integer', function() {
 });
 console.log(app.doubleVal.integer());
 
+// Scopes
+// JS does not support block level scopes, but only
+// function level scopes, so all the variables should
+// be defined at the start of the function body
+app.scopy = function(a) {
+	console.log('Executiong of scopy()');
+	console.log('Init a:' + a);
+	var bar = function(b) {
+		a += b;
+	};
+	// value of a is not changed at this point
+	console.log('Pre called a:' + a);
+	bar(20);
+	// Value of a is changed now
+	console.log('Post called a:' + a);
+	return a;
+}
+app.scopy(10);
+
 // Export app
 module.exports = app;
