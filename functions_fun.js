@@ -134,7 +134,7 @@ app.scopy = function(a) {
 }
 app.scopy(10);
 
-// Clojure
+// Closure
 app.quo = function (status) {
 	return {
 		get_status: function () {
@@ -144,6 +144,51 @@ app.quo = function (status) {
 };
 var myQuo = app.quo("rajat");
 console.log(myQuo.get_status());
+
+// Module
+app.serial_maker = function() {
+	// private properties
+	var prefix = '';
+	var seq = 0;
+	
+	// public properties
+	return {
+		set_prefix: function (p) {
+			prefix = String(p);
+		},
+		set_seq: function (s) {
+			seq = s;
+		},
+		gensym: function() {
+			var result = prefix + seq;
+			seq += 1;
+			return result;
+		}	
+	};
+};
+// Call serial_maker()
+var seqer = app.serial_maker();
+seqer.set_prefix('R');
+seqer.set_seq(2000);
+// Following lines will generate consecutive sequence numbers
+console.log(seqer.gensym());
+console.log(seqer.gensym());
+console.log(seqer.gensym());
+
+// Memoization
+app.fibonacci = function() {
+	var memo = [0, 1];
+	var fib = function (n) {
+		var result = memo[n];
+		if (typeof result != 'number') {
+			result = fib(n-1) + fib(n-2);
+			memo[n] = result;
+		}
+		return result;
+	};
+	return fib;
+}();
+console.log(app.fibonacci(3));
 
 // Export app
 module.exports = app;
