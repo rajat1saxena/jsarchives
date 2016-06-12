@@ -1,0 +1,29 @@
+<html>
+	<head>
+		<title>Clojure demo</title>
+	</head>
+	<body>
+		<div>
+			<h1> Hello </h1>
+			<p> This is so cool man </p>
+		</div>
+		<p> Awesome man </p>
+	</body>
+	<script>
+		// Adds event handlers to all nodes
+		var add_the_handlers = function(nodes) {
+			var i;
+			for (i = 0; i < nodes.length; i+=1) {
+				console.log(nodes[i]);
+				nodes[i].onclick = function (i) {
+					return function (e) {
+						alert(i);
+					};
+				}(i);
+			}
+		};
+
+		// Add handlers to all nodes
+		add_the_handlers(document.body.childNodes);
+	</script>
+</html>

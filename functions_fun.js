@@ -134,5 +134,16 @@ app.scopy = function(a) {
 }
 app.scopy(10);
 
+// Clojure
+app.quo = function (status) {
+	return {
+		get_status: function () {
+			return status;
+		}
+	};
+};
+var myQuo = app.quo("rajat");
+console.log(myQuo.get_status());
+
 // Export app
 module.exports = app;
