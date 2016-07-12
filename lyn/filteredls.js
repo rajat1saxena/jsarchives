@@ -5,6 +5,7 @@ var dir = process.argv[2];
 var extension = process.argv[3];
 
 // Read directory, asynchronously [More like Java way]
+/*
 fs.readdir(dir, function directoryListing(err, listoffiles) {
 	for(var i in listoffiles) {
 		var fileExtension = listoffiles[i].split('.');
@@ -16,11 +17,12 @@ fs.readdir(dir, function directoryListing(err, listoffiles) {
 		}
 	}
 }); 
+*/
 
 // Alternative approach, [JS way]
 fs.readdir(dir, function directoryListing(err, listoffiles) {
 	listoffiles.forEach(function (file) {
-		if (path.extname(file) === extension) {
+		if (path.extname(file) === '.' + extension) {
 			console.log(file);
 		}
 	});	
