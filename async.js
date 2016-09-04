@@ -7,12 +7,5 @@ function addOneMore() {
 	fs.readFile('number.txt', function doneReading(err, fileContent) {
 		myNumber = parseInt(fileContent);
 		myNumber++;
-
-		// Print the number
-		console.log(myNumber);
 	});
 }
-
-addOneMore();
-
-console.log(myNumber);
