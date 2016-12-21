@@ -8,9 +8,10 @@ var insertion = function (arr) {
 			j = i - 1;
 			while (j >= 0 && arr[j] > key) {
 				arr[j+1] = arr [j];
+				// A: following step enables looping in 'while'
 				j = j - 1;
 			}
-			// re-adjusting the bound (extra step from CLRS algorithm)
+			// to counter side effect of A
 			j = j + 1;
 			arr[j] = key;
 		}	
