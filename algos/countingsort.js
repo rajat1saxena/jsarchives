@@ -16,7 +16,9 @@ var counting = function (arr) {
 		for (i = 0; i < 9; i++) {
 			c[i+1] = c[i] + c[i+1];	
 		}
-		for (i = 0; i < arr.length; i++) {
+		// for i = 0 upto arr.length-1, will make the algorithm "unstable". Refer
+		// CLRS problem 8.2-3.
+		for (i = arr.length-1; i >= 0; i--) {
 			b[c[arr[i]]] = arr[i];
 			c[arr[i]] -= 1;
 		}
