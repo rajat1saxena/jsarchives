@@ -10,9 +10,11 @@ var radix = function () {
 		for (var i = 0; i < arr.length; i++) {
 			// using indexes to ensure that relative arrangements of 
 			// items do not change (The Good Parts)
+			var j;
 			var tempresult = baserconv.convert(arr[i], base);
+			var tempcount = tempresult.length;
 			// append zeros, to match maxdigits
-			for (var j = 0; j < maxdigits - tempresult.length; j++) {
+			for (j = 0; j < maxdigits - tempcount; j++) {
 				tempresult.unshift(0);
 			}
 			result[i] = tempresult;
@@ -20,10 +22,19 @@ var radix = function () {
 		return result;
 	};
 	
+	var restoreBase = function (arr, base) {
+	    var result = [];
+	    var i;
+	    for (i = 0; i < arr.length; i++) {
+	        result[i] = baserconv.convertback(arr[i], base);
+	    }
+	    return result;
+	}
+	
 	var countingSort = function (arr, base, offset) {
 		var b = [];
 		var c = [];
-		var i,j;
+		var i;
 		for (i = 0; i < base; i++) {
 			c[i] = 0;
 		}
@@ -39,7 +50,7 @@ var radix = function () {
 		}
 
 		return b;
-	}
+	};
 	
 	var sort = function (arr, base, range) {
 		var maxdigit = Math.floor(Math.log(range)/Math.log(base)) + 1;
@@ -48,28 +59,30 @@ var radix = function () {
 		if (base && typeof base !== 'undefined') {
 			arr = changeBase (arr, base, maxdigit);
 		} else {
-			throw {
+			throw new Error({
 				name: "TypeError",
 				message: "Radix is expected"
-			};
+			});
 		}
+		console.log(arr);
 
-// 	 for (var i = 0; i < maxdigit; i++) {
-// 		arr = countingSort (arr, base, i);	
-// 	 }
+		 for (var i = maxdigit-1; i >= 0; i--) {
+			arr = countingSort (arr, base, i);	
+		 }
 
-	 return arr;
-	}
+		 return arr;
+	};
 
 
 
 	that.sort = function (arr, base, range) {
-		return sort(arr, base, range);
-	}
+		var sortedResultChangedBase = sort(arr, base, range);
+		return restoreBase(sortedResultChangedBase, base);
+	};
 
 	return that;
 
-}
+};
 
 var rs = radix();
 console.log(rs.sort([0, 24, 13, 4, 19], 5, 25));
