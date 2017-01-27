@@ -25,6 +25,8 @@ var lcs = function () {
         console.log(d, c);
         for (a = 1; a <= xarr.length; a++) {
             for (b = 1; b <= yarr.length; b++) {
+                // adjust index according to JS, i.e indexes are counted from
+                // zero, not one.
                 if (xarr[a-1] === yarr[b-1]) {
                     c[a][b] = c[a-1][b-1] + 1;
                     d[a][b] = 0;
