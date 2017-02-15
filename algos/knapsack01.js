@@ -24,17 +24,33 @@ var knapsack = function () {
 	// s: array of items' weight
 	// w: maximum weight
 	// n: total number of items
+	// returns maximum value that can be achieved
 	var solve = function (s, w, n, r) {
+		var selection = [] // array of items to pick to maximize profit
+		for (var i = 0; i <= w; i++) {
+			selection[i] = [];
+		}
 		for (var i = 1; i <= w; i++) {
 			for(var j = 1; j <= n; j++) {
 				if (s[j-1][0] > i) { r[i][j] = r[i][j-1]; }
 				else if (s[j-1][0] <= i) {
-					console.log('entered: ' + i + j);
-					r[i][j] = max(r[i-s[j-1][0]][j-1], r[i][j-1]);	
+					var jitem = s[j-1][1] + r[i-s[j-1][0]][j-1];
+					var jminusonevalue = r[i][j-1];
+					r[i][j] = max(jitem, jminusonevalue);	
+					/*
+					if (jitem > jminusonevalue) {
+						// this item should be selected to maximize profit
+						selection[i][
+					}
+					*/
 				}
 			}
 		}
-		return r;
+		console.log(r);
+		return {
+			maxvalue: r[w][n],
+			selection: selection
+		};
 	}
 
 	that.solve = function (s, w) {
