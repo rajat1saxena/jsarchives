@@ -37,19 +37,25 @@ var knapsack = function () {
 					var jitem = s[j-1][1] + r[i-s[j-1][0]][j-1];
 					var jminusonevalue = r[i][j-1];
 					r[i][j] = max(jitem, jminusonevalue);	
-					/*
 					if (jitem > jminusonevalue) {
 						// this item should be selected to maximize profit
-						selection[i][
+						selection[i][j] = 1;
 					}
-					*/
 				}
 			}
 		}
-		console.log(r);
+		// backtrack to get the optimal subset
+		var k = w;
+		var result = [];
+		for (var i = n; i >= 1; i--) {
+		    if (selection[k][i] === 1) {
+		        result.push(s[i-1]);
+		        k = k - s[i-1][0];
+		    }
+		}
 		return {
 			maxvalue: r[w][n],
-			selection: selection
+			selection: result
 		};
 	}
 
