@@ -65,7 +65,7 @@ let bfs = function () {
                     bfsresult[v][1] === null ? 
                                         buffer = 'No path exists':
                                         printpath2(bfsresult, u, 
-                                            bfsresult[v][1], buffer + v + '←');
+                                            bfsresult[v][1], buffer + v + ' ← ');
                                             
     return {
         perform: perform,
