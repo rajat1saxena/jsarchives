@@ -1,18 +1,18 @@
-/*eslint-env node */
+/*eslint-env node*/
 'use strict';
 
-// A graph with connected components. Lifted directly from CLRS (Chapter 22)
+// A graph with four connected components. Refer CLRS Page 563 for visuals.
 //
-// It is an adjacency list representation.
-//
-// To be consumed by connected components algorithms.
+// the adjancy lists are sorted in alphabetical order.
 module.exports = {
-    'a': ['b'],
-    'b': ['c','e','f'],
-    'c': ['d','g'],
-    'd': ['c','h'],
-    'e': ['a','f'],
-    'f': ['g'],
-    'g': ['f','h'],
-    'h': ['h']
+    'a': ['b', 'c'],
+    'b': ['a', 'c', 'd'],
+    'c': ['a', 'b'],
+    'd': ['b'],
+    'e': ['f', 'g'],
+    'f': ['e'],
+    'g': ['e'],
+    'h': ['i'],
+    'i': ['h'],
+    'j': []
 };

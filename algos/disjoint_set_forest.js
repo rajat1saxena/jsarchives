@@ -8,7 +8,8 @@
 module.exports = function () {
     const that = {};
     
-    // augments the input graph with new properties ('p' and 'rank') and 
+    // Returns a forest of trees with only one node.
+    // Augments the input graph with new properties ('p' and 'rank') and 
     // returns a new graph, in following form:
     // {
     //    a: {adj: ['b'], p: 'a', rank: 0},
@@ -40,17 +41,22 @@ module.exports = function () {
             aug_graph[yroot].p = xroot;
         } else {
             aug_graph[xroot].p = yroot;
-            if (aug_graph[xroot] === aug_graph[yroot])
-                aug_graph[yroot].rank++;
+            if (aug_graph[xroot].rank === aug_graph[yroot].rank)
+                aug_graph[yroot].rank = aug_graph[yroot].rank + 1;
         }
+        return aug_graph;
     };
     
     const union = function (x, y, aug_graph) {
-        return link(find_set(x, aug_graph), find_set(y, aug_graph));
+        return link(find_set(x, aug_graph), find_set(y, aug_graph), aug_graph);
     };
     
     that.make_set = function (graph) {
         return make_set(graph);
+    };
+    
+    that.find_set = function (x, aug_graph) {
+        return find_set(x, aug_graph);
     };
     
     that.union = function (x, y, aug_graph) {
