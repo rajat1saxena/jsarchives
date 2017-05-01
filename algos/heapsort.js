@@ -19,8 +19,12 @@ const heapsort = function(a) {
 		a = swap(a, 0, i);
 		a.heapsize = a.heapsize - 1;
 		a = heap.max_heapify(a, 0);
-		console.log(a[i]);
+		// uncomment to print in descending order
+		// console.log(a[i]);
 	};
+
+	return a;
 };
 
-heapsort([23,45,34,66,19,106,99]);
+const unsorted = [23,45,34,66,19,106,99];
+console.log(heapsort(unsorted));
