@@ -2,7 +2,7 @@
 
 /*eslint-env node*/
 
-let dfs = () => {
+const dfs = () => {
     const NODE_WHITE = 'white';
     const NODE_GRAY = 'gray';
     const NODE_BLACK = 'black';
@@ -16,26 +16,31 @@ let dfs = () => {
     
     // 'dfsstruct' will be in form
     // {'a': ['GRAY', 'c', 1], 'b': ['BLACK', null, 0]}
-    const dfs_visit = (graph, node) => {
+    const dfs_visit = (graph, node, vertex_finish_hook) => {
         time = time + 1;
         dfsresult[node][0] = NODE_GRAY;
         dfsresult[node][2] = time;
-        let node_adj_list = graph[node];
+        const node_adj_list = graph[node];
         for (let i = 0; i < node_adj_list.length; i++) {
             let adj_node = node_adj_list[i];
             if (dfsresult[adj_node][0] === NODE_WHITE) {
                 dfsresult[adj_node][1] = node;
-                dfs_visit(graph, adj_node);
+                dfs_visit(graph, adj_node, vertex_finish_hook);
             }
         }
         dfsresult[node][0] = NODE_BLACK;
         time += 1;
         dfsresult[node][3] = time;
+	// call post processing hooks, if any
+	vertex_finish_hook && vertex_finish_hook(node);
     };
     
     return {
         // graph: graph as adjacency list
-        perform: (graph) => {
+	// vertex_finish_hook: a callback which can be used
+	// to perform additional actions once a vertex is marked
+	// black, as in topological sort.
+        perform: (graph, vertex_finish_hook = null) => {
             for (let element in graph) {
                 if (graph.hasOwnProperty(element)) {
                     let emptyarr = [];
@@ -48,11 +53,11 @@ let dfs = () => {
                     dfsresult[element] = emptyarr;
                 }
             }
-            let keys = Object.keys(dfsresult);
+            const keys = Object.keys(dfsresult);
             for (let i = 0; i < keys.length; i++) {
                 let node_props = dfsresult[keys[i]];
                 if (node_props[0] === NODE_WHITE) {
-                    dfs_visit(graph, keys[i]);
+                    dfs_visit(graph, keys[i], vertex_finish_hook);
                 }
             }
             
@@ -61,14 +66,16 @@ let dfs = () => {
     };
 };
 
-let graph = {
-    '1': ['2','4'],
-    '2': ['5'],
-    '3': ['5', '6'],
-    '4': ['2'],
-    '5': ['4'],
-    '6': ['6']
-};
+module.exports = dfs;
 
-let depthfirst = dfs();
-console.log(depthfirst.perform(graph));
+//let graph = {
+//    '1': ['2','4'],
+//    '2': ['5'],
+//    '3': ['5', '6'],
+//    '4': ['2'],
+//    '5': ['4'],
+//    '6': ['6']
+//};
+//
+//let depthfirst = dfs();
+//console.log(depthfirst.perform(graph));
