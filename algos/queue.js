@@ -1,5 +1,9 @@
 // An implementation of a queue
-queue = function (size) {
+// Note that this implementation uses 'size', hence the result queue is finite.
+// Scroll down for secondary implementation.
+'use strict';
+
+const queue = function (size) {
     let head = 0;
     let tail = 0;
     let count = 0;
@@ -51,5 +55,33 @@ queue = function (size) {
 //console.log(testqueue.dequeue());
 //console.log(testqueue.dequeue());
 //console.log(testqueue.isEmpty());
+
+// Another way to design queue, without maintaining a count variable
+const queue_sec = (size) => {
+    let arr = [];
+    let head = 0;
+    let tail = 0;
+    
+    return {
+        enqueue: (x) => {
+			// check for overflow
+			if (head === tail && arr[head])
+				return new Error("Queue full");
+			arr[tail] = x; 
+			// increment tail
+			tail = (tail === size - 1 ? 0 : tail + 1);
+			console.log(tail);
+        },
+        dequeue: () => {
+			// check for underflow
+			if (head === tail && !arr[head]) 
+                return new Error("Queue underflow");
+            let result = arr[head];
+            delete arr[head];
+			head = (head === size - 1 ? 0 : head + 1);
+			return result;
+        }
+    };
+};
 
 exports.queue = queue;
