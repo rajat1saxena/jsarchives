@@ -3,10 +3,11 @@
 
 //const dag = require('../dag');
 const dag = {
-    'r': [['s', 5], ['t', 3]],
-    's': [['t', 2]],
-    't': []
+    's': ['t'],
+    't': [],
+    'r': ['s', 't']
 };
+const tsort = require('../topological_sort')();
 
 const allpaths = function () {
     const initialize = function (dag) {
@@ -21,9 +22,11 @@ const allpaths = function () {
     
     return {
         count (dag) {
+            // sort the dag vertices in topological order
+            const tsorted = tsort.perform(dag);
            let paths = initialize(dag);  // O(V)
            // Following loop has O(V+E)
-           for (let u of Object.keys(dag)) {
+           for (let u of tsorted) {
                for (let v of dag[u]) {
                    paths[v[0]] = paths[u] + paths[v[0]] + 1;
                }
