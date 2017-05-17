@@ -1,7 +1,7 @@
 /*eslint-env node */
 'use strict';
 
-// A directed graph with connected components. Lifted directly from CLRS (Chapter 22)
+// A 'directed graph' with connected components. Lifted directly from CLRS (Chapter 22, Page 616)
 //
 // It is an adjacency list representation.
 //
