@@ -6,6 +6,10 @@ var myNumber = undefined;
 function addOneMore() {
 	fs.readFile('number.txt', function doneReading(err, fileContent) {
 		myNumber = parseInt(fileContent);
-		myNumber++;
+		console.log(++myNumber);
 	});
 }
+
+console.log('Calling addOneMore');
+addOneMore();
+console.log('Called addOneMore');
